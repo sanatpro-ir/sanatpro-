@@ -1,0 +1,69 @@
+
+
+
+
+
+body{
+  background:#050816;
+}
+/* IR Yekan CDN */
+
+@import url("https://cdn.fontcdn.ir/Font/Persian/Yekan/Yekan.css");
+
+/* اعمال فونت به کل پروژه */
+/* * {
+  font-family: Yekan, sans-serif !important;
+  direction: rtl;
+  text-align: right;
+} */
+
+* {
+  font-family: "Vazirmatn Variable", sans-serif !important;
+  direction: rtl;
+}
+/* اگر انگلیسی بود LTR */
+:lang(en) {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #eeeeee;
+  color: #ffffff;
+}
+h1 {
+  font-size: 2rem !important; /* قبلش خیلی بزرگ بود */
+  line-height: 1.4 !important;
+}
+
+h2 {
+  font-size: 1.5rem !important;
+}
+
+h3 {
+  font-size: 1.0rem !important;
+}
+
+p,
+a,
+span,
+li {
+  font-size: 1rem;
+}
+
+
+.input {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 12px 14px;
+  outline: none;
+}
+.input:focus {
+  border-color: #ffc000;
+  box-shadow: 0 0 0 2px rgba(255,192,0,.2);
+}

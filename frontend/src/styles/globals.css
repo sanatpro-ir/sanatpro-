@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+
+--primary:#D4AF37;
+
+--primary-light:#E5C65C;
+
+--dark:#0B0B0B;
+
+--surface:#ffffff;
+
+--background:#F8F8F8;
+
+--text:#222222;
+
+--radius:20px;
+
+--transition:.3s ease;
+
+}

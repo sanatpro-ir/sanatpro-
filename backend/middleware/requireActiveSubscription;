@@ -1,0 +1,33 @@
+const User = require("../models/User");
+
+const requireActiveSubscription = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "کاربر پیدا نشد"
+      });
+    }
+
+    const isActive =
+      user.subscriptionActive &&
+      user.subscriptionExpiresAt &&
+      new Date(user.subscriptionExpiresAt) > new Date();
+
+    if (!isActive) {
+      return res.status(403).json({
+        message: "اشتراک شما فعال نیست. لطفاً هزینه اشتراک را پرداخت کنید."
+      });
+    }
+
+    next();
+
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    });
+  }
+};
+
+module.exports = requireActiveSubscription;

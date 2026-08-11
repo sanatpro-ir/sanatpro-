@@ -1,0 +1,22 @@
+.mine-container{
+    width:100%;
+    margin:auto;
+    padding-left:24px;
+    padding-right:24px;
+}
+
+.mine-container-sm{
+    max-width:900px;
+}
+
+.mine-container-default{
+    max-width:1280px;
+}
+
+.mine-container-wide{
+    max-width:1440px;
+}
+
+.mine-container-fluid{
+    max-width:100%;
+}
