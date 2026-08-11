@@ -9,7 +9,7 @@ const usedProducts = [
     category: "معدن",
     condition: "کارکرده – سالم",
     brand: "Atlas Copco",
-    img: "https://images.unsplash.com/photo-1597004891225-6e3c2c7a407e"
+    img: "https://images.unsplash.com/photo-1597004891225-6e3c2c7a407e",
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ const usedProducts = [
     category: "معدن",
     condition: "استوک پروژه",
     brand: "Kaeser",
-    img: "https://images.unsplash.com/photo-1581092580504-8987c1d9d4d6"
+    img: "https://images.unsplash.com/photo-1581092580504-8987c1d9d4d6",
   },
   {
     id: 3,
@@ -25,15 +25,15 @@ const usedProducts = [
     category: "تجهیزات",
     condition: "بازسازی شده",
     brand: "XCMG",
-    img: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09"
-  }
+    img: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09",
+  },
 ];
 
 export default function UsedMarket() {
   const [activeCategory, setActiveCategory] = useState("همه");
   const [search, setSearch] = useState("");
 
-  const filteredProducts = usedProducts.filter(p => {
+  const filteredProducts = usedProducts.filter((p) => {
     const matchCategory =
       activeCategory === "همه" || p.category === activeCategory;
 
@@ -44,21 +44,23 @@ export default function UsedMarket() {
 
   return (
     <div className="bg-black min-h-screen py-24 text-white">
-
+      {/* ===== Title ===== */}
       <h1 className="text-4xl font-extrabold text-center mb-16">
-        بازار تجهیزات <span className="text-[#ffc000]">دست دوم</span>
+        بازار تجهیزات{" "}
+        <span className="text-[#ffc000]">دست دوم</span>
       </h1>
 
       {/* ===== Filters ===== */}
       <div className="flex justify-center gap-4 mb-12 flex-wrap">
-        {["همه", "فولاد", "معدن", "تجهیزات"].map(cat => (
+        {["همه", "فولاد", "معدن", "تجهیزات"].map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            className={`px-8 py-3 rounded-xl font-bold transition
-            ${activeCategory === cat
-              ? "bg-[#ffc000] text-black"
-              : "bg-gray-800 text-gray-300 hover:bg-gray-700"}`}
+            className={`px-8 py-3 rounded-xl font-bold transition ${
+              activeCategory === cat
+                ? "bg-[#ffc000] text-black"
+                : "bg-gray-800 text-gray-300 hover:bg-gray-700"
+            }`}
           >
             {cat}
           </button>
@@ -69,7 +71,7 @@ export default function UsedMarket() {
       <div className="max-w-3xl mx-auto px-4 mb-16">
         <input
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
           placeholder="جستجو در تجهیزات دست دوم..."
           className="w-full bg-[#020617] border border-gray-700 rounded-xl px-5 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#ffc000]"
         />
@@ -77,19 +79,26 @@ export default function UsedMarket() {
 
       {/* ===== Grid ===== */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-6">
-        {filteredProducts.map(p => (
+        {filteredProducts.map((p) => (
           <motion.div
             whileHover={{ scale: 1.04 }}
             key={p.id}
             className="bg-[#020617] border border-gray-700 rounded-2xl overflow-hidden shadow-xl"
           >
             <Link to={`/used/${p.id}`}>
-              <img src={p.img} className="h-56 w-full object-cover" />
+              <img
+                src={p.img}
+                alt={p.title}
+                className="h-56 w-full object-cover"
+              />
             </Link>
 
             <div className="p-5 space-y-2">
               <h3 className="font-bold text-lg">{p.title}</h3>
-              <p className="text-sm text-gray-400">{p.brand}</p>
+
+              <p className="text-sm text-gray-400">
+                {p.brand}
+              </p>
 
               <span className="inline-block bg-[#ffc000] text-black px-4 py-1 rounded-full text-xs font-bold">
                 {p.condition}
@@ -99,6 +108,12 @@ export default function UsedMarket() {
         ))}
       </div>
 
+      {/* ===== Empty State ===== */}
+      {filteredProducts.length === 0 && (
+        <div className="text-center text-gray-400 py-16">
+          موردی برای نمایش پیدا نشد.
+        </div>
+      )}
     </div>
   );
 }
