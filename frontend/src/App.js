@@ -22,6 +22,13 @@ import About from "./pages/About";
 import Inquiry from "./pages/Inquiry";
 import Compare from "./pages/Compare";
 import PaymentCallback from "./pages/PaymentCallback";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+
+/* تامین‌کننده */
+import SupplierLogin from "./pages/SupplierLogin";
+import SupplierDashboard from "./pages/SupplierDashboard";
+
 /* ادمین */
 import AdminRoute from "./admin/AdminRoute";
 import AdminLogin from "./admin/AdminLogin";
@@ -32,10 +39,7 @@ import AdminProducts from "./admin/AdminProducts";
 import AdminUsers from "./admin/AdminUsers";
 import AdminHomeContent from "./admin/AdminHomeContent";
 import AdminUsedEquipment from "./admin/AdminUsedEquipment";
-import SupplierLogin from "./pages/SupplierLogin";
-import SupplierDashboard from "./pages/SupplierDashboard";
 import AdminPendingProducts from "./admin/AdminPendingProducts";
-
 
 function AppLayout() {
   const location = useLocation();
@@ -62,16 +66,12 @@ function AppLayout() {
         <Route path="/about" element={<About />} />
         <Route path="/inquiry" element={<Inquiry />} />
         <Route path="/compare" element={<Compare />} />
-        <Route path="/admin/pending-products"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminPendingProducts />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
-      {/* پنل تامین‌کننده */}
+
+        {/* بازیابی رمز عبور */}
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+
+        {/* پنل تامین‌کننده */}
         <Route path="/supplier-login" element={<SupplierLogin />} />
         <Route path="/supplier" element={<SupplierDashboard />} />
 
@@ -111,18 +111,16 @@ function AppLayout() {
           }
         />
 
-          <Route
-  path="/admin/used-equipment"
-  element={
-    <AdminRoute>
-      <AdminLayout>
-        <AdminUsedEquipment />
-      </AdminLayout>
-    </AdminRoute>
-  }
-/>
-
-
+        <Route
+          path="/admin/used-equipment"
+          element={
+            <AdminRoute>
+              <AdminLayout>
+                <AdminUsedEquipment />
+              </AdminLayout>
+            </AdminRoute>
+          }
+        />
 
         <Route
           path="/admin/users"
@@ -141,6 +139,17 @@ function AppLayout() {
             <AdminRoute>
               <AdminLayout>
                 <AdminHomeContent />
+              </AdminLayout>
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/pending-products"
+          element={
+            <AdminRoute>
+              <AdminLayout>
+                <AdminPendingProducts />
               </AdminLayout>
             </AdminRoute>
           }
