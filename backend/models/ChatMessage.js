@@ -6,16 +6,22 @@ const chatMessageSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      maxlength: 40,
+      maxlength: 80,
     },
-    text: {
+
+    message: {
       type: String,
       required: true,
       trim: true,
       maxlength: 500,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-module.exports = mongoose.model("ChatMessage", chatMessageSchema);
+module.exports = mongoose.model(
+  "ChatMessage",
+  chatMessageSchema
+);

@@ -41,6 +41,7 @@ app.use("/api/used-equipments", require("./routes/usedEquipmentRoutes"));
 app.use("/api/my-products", require("./routes/supplierProductRoutes"));
 app.use("/api/chat", require("./routes/chatRoutes"));
 
+
 // Test route (فقط برای تست، اگه فرانت جدا سرو میشه)
 app.get("/api", (req, res) => {
   res.send("MinePro Backend is running");

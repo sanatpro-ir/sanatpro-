@@ -13,7 +13,8 @@ router.get("/", async (req, res) => {
 
     res.json(messages);
   } catch (err) {
-    console.error("GET chat error:", err);
+    console.error("Chat GET error:", err);
+
     res.status(500).json({
       message: "خطا در دریافت پیام‌ها",
     });
@@ -23,22 +24,35 @@ router.get("/", async (req, res) => {
 // ارسال پیام
 router.post("/", async (req, res) => {
   try {
-    const { name, message } = req.body;
+    const name = String(req.body.name || "").trim();
+    const message = String(req.body.message || "").trim();
 
-    if (!name?.trim() || !message?.trim()) {
+    if (!name || !message) {
       return res.status(400).json({
-        message: "نام و پیام الزامی است",
+        message: "نام و پیام الزامی است.",
       });
     }
 
-    const newMessage = await ChatMessage.create({
-      name: name.trim(),
-      message: message.trim(),
+    if (name.length > 80) {
+      return res.status(400).json({
+        message: "نام بیش از حد طولانی است.",
+      });
+    }
+
+    if (message.length > 500) {
+      return res.status(400).json({
+        message: "پیام بیش از حد طولانی است.",
+      });
+    }
+
+    const created = await ChatMessage.create({
+      name,
+      message,
     });
 
-    res.status(201).json(newMessage);
+    res.status(201).json(created);
   } catch (err) {
-    console.error("POST chat error:", err);
+    console.error("Chat POST error:", err);
 
     res.status(500).json({
       message: "خطا در ارسال پیام",

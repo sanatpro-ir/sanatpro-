@@ -8,7 +8,7 @@ import useLangDirection from "./hooks/useLangDirection";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
-import LiveChat from "./components/LiveChat";
+// import LiveChat from "./components/LiveChat";
 
 /* صفحات */
 import Home from "./pages/Home";
@@ -170,7 +170,7 @@ function AppLayout() {
       {!isAdminRoute && (
         <>
           <WhatsAppButton />
-          <LiveChat />
+         
           <Footer />
         </>
       )}
