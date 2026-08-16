@@ -11,6 +11,7 @@ import "./styles/globals.css";
 
 import App from "./App";
 import { UsedMarketProvider } from "./context/UsedMarketContext";
+import "./i18n";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

@@ -1,11 +1,8 @@
-
-
-
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 import {
   FaSearch,
   FaIndustry,
@@ -34,6 +31,7 @@ const ICON_MAP = {
 const API_HOME_SECTIONS = `${BASE_URL}/api/home-sections`;
 
 function Home() {
+  const { t } = useTranslation();
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
@@ -185,7 +183,7 @@ function Home() {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                  placeholder="همینجا دنبالش بگرد   "
+                  placeholder={t("home_search_placeholder")}
                   className="w-full p-5 rounded-2xl text-gray-300 placeholder-gray-400 bg-blue-900/30 backdrop-blur-sm border border-blue-800 pr-14 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 />
                 <button onClick={handleSearch} className="absolute right-3 top-1/2 -translate-y-1/2 bg-[#ffc000] p-3 rounded-xl">
@@ -194,18 +192,18 @@ function Home() {
               </div>
               <div className="flex gap-4 flex-wrap">
                 <Link to="/shop" className="bg-[#ffc000] text-black px-8 py-4 rounded-xl font-bold">
-                  ورود به فروشگاه
+                  {t("home_enter_shop")}
                 </Link>
                 <a href="https://wa.me/989121234567" className="border border-[#ffc000] text-[#ffc000] px-8 py-4 rounded-xl font-bold">
-                  مشاوره سریع
+                  {t("home_quick_consult")}
                 </a>
               </div>
             </motion.div>
             <motion.div className="grid grid-cols-3 gap-6 text-center">
               {[
-                { icon: <FaIndustry size={42} />, label: "صنعت معدن" },
-                { icon: <FaTools size={42} />, label: "تجهیزات تخصصی" },
-                { icon: <FaHandshake size={42} />, label: "قرارداد B2B" },
+                { icon: <FaIndustry size={42} />, label: t("home_badge_mining") },
+                { icon: <FaTools size={42} />, label: t("home_badge_equipment") },
+                { icon: <FaHandshake size={42} />, label: t("home_badge_b2b") },
               ].map((item, i) => (
                 <motion.div key={i} whileHover={{ scale: 1.1 }} className="bg-gray-900/80 p-6 rounded-2xl border border-gray-800">
                   <div className="text-[#ffc000] mb-2">{item.icon}</div>
@@ -221,10 +219,10 @@ function Home() {
           <div className="relative max-w-7xl mx-auto px-6">
             <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-center mb-24">
               <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
-                صنایع تحت پوشش
-                <span className="text-[#FFC000]"> MinePro</span>
+                {t("home_industries_title_1")}
+                <span className="text-[#FFC000]"> {t("home_industries_title_2")}</span>
               </h2>
-              <p className="text-gray-600 text-lg max-w-2xl mx-auto">تأمین تخصصی تجهیزات برای صنایع معدنی، فولادی و پروژه‌های صنعتی سنگین</p>
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">{t("home_industries_desc")}</p>
             </motion.div>
             <div className="grid md:grid-cols-3 gap-14">
               {industries.map((item, i) => (
@@ -254,17 +252,17 @@ function Home() {
           <div className="max-w-7xl mx-auto px-6">
             <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="text-center mb-16">
               <h2 className="text-4xl font-extrabold mb-4">
-                دسته‌بندی
-                <span className="text-[#ffc000]"> تجهیزات</span>
+                {t("home_categories_title_1")}
+                <span className="text-[#ffc000]"> {t("home_categories_title_2")}</span>
               </h2>
-              <p className="text-gray-400">راهکارهای تخصصی برای صنایع معدن و فولاد</p>
+              <p className="text-gray-400">{t("home_categories_desc")}</p>
             </motion.div>
             <div className="grid md:grid-cols-4 sm:grid-cols-2 gap-8">
               {[
-                { title: "تجهیزات فرآوری", desc: "سرند، نوار نقاله، فیدر، کراشر", category: "process" },
-                { title: "قطعات یدکی صنعتی", desc: "قطعات مصرفی خطوط تولید", category: "spare" },
-                { title: "ماشین‌آلات سنگین", desc: "مخصوص معادن و فولاد", category: "heavy" },
-                { title: "تأمین پروژه‌ای B2B", desc: "قرارداد رسمی و پروژه‌محور", category: "b2b" },
+                { title: t("home_cat_process_title"), desc: t("home_cat_process_desc"), category: "process" },
+                { title: t("home_cat_spare_title"), desc: t("home_cat_spare_desc"), category: "spare" },
+                { title: t("home_cat_heavy_title"), desc: t("home_cat_heavy_desc"), category: "heavy" },
+                { title: t("home_cat_b2b_title"), desc: t("home_cat_b2b_desc"), category: "b2b" },
               ].map((item, i) => (
                 <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                   <Link to={`/shop?category=${item.category}`} className="block bg-gray-900 border border-gray-800 rounded-2xl p-8 hover:border-[#ffc000] hover:-translate-y-2 transition-all duration-300">
@@ -284,12 +282,12 @@ function Home() {
             {ads.length > 0 && (
               <motion.div key={adIndex} initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
                 <div className="flex items-center gap-3 mb-6 text-[#ffc000] font-bold">
-                  <FaBullhorn /> تبلیغات ویژه SANAT-Pro
+                  <FaBullhorn /> {t("home_ads_badge")}
                 </div>
                 <h2 className="text-4xl font-extrabold mb-6">{ads[adIndex]?.title}</h2>
                 <p className="text-gray-600 mb-10">{ads[adIndex]?.desc}</p>
                 <Link to="/b2b" className="bg-black text-white px-10 py-4 rounded-xl font-bold">
-                  شروع همکاری B2B
+                  {t("home_ads_cta")}
                 </Link>
               </motion.div>
             )}
@@ -307,14 +305,14 @@ function Home() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,192,0,0.25),transparent_70%)]" />
           <motion.div initial={{ opacity: 0, y: 60 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative max-w-4xl mx-auto px-6 text-center">
             <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
-              آماده شروع همکاری
-              <span className="text-[#FFC000]"> پروژه‌ای </span>
-              هستید؟
+              {t("home_cta_title_1")}
+              <span className="text-[#FFC000]"> {t("home_cta_title_2")} </span>
+              {t("home_cta_title_3")}
             </h2>
-            <p className="text-lg text-gray-700 mb-12">مشاوره فنی رایگان • پیش‌فاکتور رسمی • قرارداد رسمی B2B</p>
+            <p className="text-lg text-gray-700 mb-12">{t("home_cta_desc")}</p>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }} className="inline-block">
               <Link to="/b2b" className="relative inline-flex items-center justify-center gap-3 bg-black text-white px-12 py-5 rounded-2xl font-extrabold text-lg shadow-xl hover:bg-gray-900 transition">
-                شروع همکاری B2B
+                {t("home_cta_button")}
                 <motion.span initial={{ x: 0 }} whileHover={{ x: 6 }} transition={{ type: "spring", stiffness: 300 }}>
                   →
                 </motion.span>
@@ -338,12 +336,12 @@ function Home() {
 
         <section className="py-28 bg-white">
           <div className="max-w-7xl mx-auto px-6">
-            <h2 className="text-4xl font-extrabold mb-16 text-center">خدمات SANAT-Pro</h2>
+            <h2 className="text-4xl font-extrabold mb-16 text-center">{t("home_services_title")}</h2>
             <div className="grid md:grid-cols-3 gap-10">
               {[
-                { title: "فروش تجهیزات معدنی", desc: "تأمین تخصصی تجهیزات حفاری، استخراج و ایمنی معدن" },
-                { title: "قراردادهای پروژه‌ای B2B", desc: "همکاری رسمی با شرکت‌ها و پروژه‌های صنعتی" },
-                { title: "مشاوره فنی", desc: "راهنمایی تخصصی برای انتخاب تجهیزات مناسب پروژه" },
+                { title: t("home_service_1_title"), desc: t("home_service_1_desc") },
+                { title: t("home_service_2_title"), desc: t("home_service_2_desc") },
+                { title: t("home_service_3_title"), desc: t("home_service_3_desc") },
               ].map((item, i) => (
                 <motion.div key={i} whileHover={{ y: -10 }} className="bg-gray-50 p-10 rounded-2xl shadow-lg border hover:border-[#ffc000] transition">
                   <h3 className="text-xl font-bold mb-4">{item.title}</h3>
@@ -356,9 +354,9 @@ function Home() {
 
         <section className="py-28 bg-gray-900 text-white">
           <div className="max-w-7xl mx-auto px-6">
-            <h2 className="text-4xl font-extrabold mb-20 text-center">چرا SANAT-Pro؟</h2>
+            <h2 className="text-4xl font-extrabold mb-20 text-center">{t("home_why_title")}</h2>
             <div className="grid md:grid-cols-4 gap-12 text-center">
-              {["تجربه صنعتی واقعی", "تأمین مستقیم و شفاف", "پشتیبانی فنی تخصصی", "قراردادهای رسمی B2B"].map((item, i) => (
+              {[t("home_why_1"), t("home_why_2"), t("home_why_3"), t("home_why_4")].map((item, i) => (
                 <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.15 }}>
                   <div className="text-5xl text-[#ffc000] mb-5">✔</div>
                   <h3 className="font-bold text-lg">{item}</h3>
@@ -370,9 +368,15 @@ function Home() {
 
         <section className="py-24 bg-gray-100">
           <div className="max-w-7xl mx-auto px-6">
-            <h2 className="text-4xl font-extrabold mb-14 text-center">فرآیند همکاری B2B</h2>
+            <h2 className="text-4xl font-extrabold mb-14 text-center">{t("home_process_title")}</h2>
             <div className="grid md:grid-cols-5 gap-6 text-center">
-              {["ارسال درخواست", "بررسی فنی", "پیشنهاد قیمت", "قرارداد رسمی", "تحویل پروژه"].map((step, i) => (
+              {[
+                t("home_process_1"),
+                t("home_process_2"),
+                t("home_process_3"),
+                t("home_process_4"),
+                t("home_process_5"),
+              ].map((step, i) => (
                 <motion.div key={i} whileHover={{ scale: 1.08 }} className="bg-gray-900 text-white p-6 rounded-xl">
                   <div className="text-[#ffc000] font-extrabold text-2xl mb-2">{i + 1}</div>
                   <p>{step}</p>

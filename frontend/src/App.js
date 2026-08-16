@@ -1,6 +1,8 @@
 import { useState } from "react";
 import IntroLoader from "./components/IntroLoader";
 import { Routes, Route, useLocation } from "react-router-dom";
+import "./i18n";
+import useLangDirection from "./hooks/useLangDirection";
 
 /* سایت */
 import Navbar from "./components/Navbar";
@@ -42,8 +44,14 @@ import AdminUsedEquipment from "./admin/AdminUsedEquipment";
 import AdminPendingProducts from "./admin/AdminPendingProducts";
 
 function AppLayout() {
+  useLangDirection();
+
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const isHomeRoute = location.pathname === "/";
+
+  // فقط صفحاتی که هدر دارن و صفحه اصلی نیستن، فاصله بالا می‌گیرن
+  const needsTopPadding = !isAdminRoute && !isHomeRoute;
 
   return (
     <>
@@ -51,110 +59,112 @@ function AppLayout() {
       {!isAdminRoute && <Navbar />}
 
       {/* محتوای اصلی */}
-      <Routes>
-        {/* سایت */}
-        <Route path="/" element={<Home />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/b2b" element={<B2B />} />
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/category-two" element={<CategoryTwo />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="/sell-used" element={<SellUsed />} />
-        <Route path="/used" element={<UsedMarket />} />
-        <Route path="/product/used/:id" element={<UsedProductDetails />} />
-        <Route path="/payment/callback" element={<PaymentCallback />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/inquiry" element={<Inquiry />} />
-        <Route path="/compare" element={<Compare />} />
+      <div className={needsTopPadding ? "pt-16" : ""}>
+        <Routes>
+          {/* سایت */}
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/b2b" element={<B2B />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/category-two" element={<CategoryTwo />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/sell-used" element={<SellUsed />} />
+          <Route path="/used" element={<UsedMarket />} />
+          <Route path="/product/used/:id" element={<UsedProductDetails />} />
+          <Route path="/payment/callback" element={<PaymentCallback />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/inquiry" element={<Inquiry />} />
+          <Route path="/compare" element={<Compare />} />
 
-        {/* بازیابی رمز عبور */}
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
+          {/* بازیابی رمز عبور */}
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-        {/* پنل تامین‌کننده */}
-        <Route path="/supplier-login" element={<SupplierLogin />} />
-        <Route path="/supplier" element={<SupplierDashboard />} />
+          {/* پنل تامین‌کننده */}
+          <Route path="/supplier-login" element={<SupplierLogin />} />
+          <Route path="/supplier" element={<SupplierDashboard />} />
 
-        {/* ادمین */}
-        <Route path="/admin-login" element={<AdminLogin />} />
+          {/* ادمین */}
+          <Route path="/admin-login" element={<AdminLogin />} />
 
-        <Route
-          path="/admin"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminDashboard />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminLayout>
+                  <AdminDashboard />
+                </AdminLayout>
+              </AdminRoute>
+            }
+          />
 
-        <Route
-          path="/admin/categories"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminCategories />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
+          <Route
+            path="/admin/categories"
+            element={
+              <AdminRoute>
+                <AdminLayout>
+                  <AdminCategories />
+                </AdminLayout>
+              </AdminRoute>
+            }
+          />
 
-        <Route
-          path="/admin/products"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminProducts />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
+          <Route
+            path="/admin/products"
+            element={
+              <AdminRoute>
+                <AdminLayout>
+                  <AdminProducts />
+                </AdminLayout>
+              </AdminRoute>
+            }
+          />
 
-        <Route
-          path="/admin/used-equipment"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminUsedEquipment />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
+          <Route
+            path="/admin/used-equipment"
+            element={
+              <AdminRoute>
+                <AdminLayout>
+                  <AdminUsedEquipment />
+                </AdminLayout>
+              </AdminRoute>
+            }
+          />
 
-        <Route
-          path="/admin/users"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminUsers />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
+          <Route
+            path="/admin/users"
+            element={
+              <AdminRoute>
+                <AdminLayout>
+                  <AdminUsers />
+                </AdminLayout>
+              </AdminRoute>
+            }
+          />
 
-        <Route
-          path="/admin/home-content"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminHomeContent />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
+          <Route
+            path="/admin/home-content"
+            element={
+              <AdminRoute>
+                <AdminLayout>
+                  <AdminHomeContent />
+                </AdminLayout>
+              </AdminRoute>
+            }
+          />
 
-        <Route
-          path="/admin/pending-products"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminPendingProducts />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
-      </Routes>
+          <Route
+            path="/admin/pending-products"
+            element={
+              <AdminRoute>
+                <AdminLayout>
+                  <AdminPendingProducts />
+                </AdminLayout>
+              </AdminRoute>
+            }
+          />
+        </Routes>
+      </div>
 
       {/* فقط سایت */}
       {!isAdminRoute && (

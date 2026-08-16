@@ -1,11 +1,35 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function About() {
+  const { t } = useTranslation();
+
+  const services = [
+    t("about_service_1"),
+    t("about_service_2"),
+    t("about_service_3"),
+    t("about_service_4"),
+  ];
+
+  const whyUs = [
+    t("about_why_1"),
+    t("about_why_2"),
+    t("about_why_3"),
+    t("about_why_4"),
+  ];
+
+  const industries = [
+    t("about_industry_1"),
+    t("about_industry_2"),
+    t("about_industry_3"),
+    t("about_industry_4"),
+    t("about_industry_5"),
+  ];
+
   return (
     <div className="w-full overflow-hidden bg-gray-900 text-white">
 
-      {/* ================= HERO ================= */}
       <section
         className="relative h-[70vh] flex items-center justify-center bg-cover bg-center"
         style={{ backgroundImage: `url('/videos/hero.gif')` }}
@@ -19,11 +43,10 @@ export default function About() {
           className="relative z-10 text-center px-6 max-w-4xl"
         >
           <h1 className="text-4xl md:text-5xl font-extrabold mb-6">
-            تأمین تخصصی تجهیزات صنایع فولاد و معدن
+            {t("about_hero_title")}
           </h1>
           <p className="text-lg mb-8">
-            SANAT-Pro پلتفرم تخصصی استعلام، تأمین و همکاری پروژه‌ای B2B است که با تمرکز
-            بر صنایع فولاد، معدن و صنایع سنگین فعالیت می‌کند.
+            {t("about_hero_desc")}
           </p>
 
           <motion.img
@@ -37,7 +60,6 @@ export default function About() {
         </motion.div>
       </section>
 
-      {/* ================= WHO WE ARE ================= */}
       <section className="py-28 bg-gray-800">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
 
@@ -48,13 +70,10 @@ export default function About() {
             className="flex flex-col justify-center text-center md:text-left"
           >
             <h2 className="text-3xl font-extrabold mb-6">
-              SANATpro در یک نگاه
+              {t("about_overview_title")}
             </h2>
             <p className="leading-8">
-              MinePro با تمرکز بر صنایع فولاد، معدن و صنایع سنگین، به‌عنوان یک
-              پلتفرم تخصصی در حوزه تأمین تجهیزات صنعتی و استعلام پروژه‌ای فعالیت
-              می‌کند. هدف ما ایجاد ارتباط مؤثر میان تولیدکنندگان، تأمین‌کنندگان
-              و کارفرمایان صنعتی است.
+              {t("about_overview_desc")}
             </p>
           </motion.div>
 
@@ -69,18 +88,12 @@ export default function About() {
         </div>
       </section>
 
-      {/* ================= SERVICES ================= */}
       <section className="py-28 bg-gray-700">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-extrabold mb-16">خدمات ما</h2>
+          <h2 className="text-3xl font-extrabold mb-16">{t("about_services_title")}</h2>
 
           <div className="grid md:grid-cols-4 sm:grid-cols-2 gap-10">
-            {[
-              "تجهیزات فرآوری مواد معدنی",
-              "قطعات یدکی صنعتی",
-              "ماشین‌آلات و تجهیزات سنگین",
-              "تأمین پروژه‌ای B2B"
-            ].map((item, i) => (
+            {services.map((item, i) => (
               <motion.div
                 key={i}
                 whileHover={{ y: -8 }}
@@ -93,18 +106,12 @@ export default function About() {
         </div>
       </section>
 
-      {/* ================= WHY US ================= */}
       <section className="py-28 bg-gray-800">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-extrabold mb-16">چرا SANAT-Pro؟</h2>
+          <h2 className="text-3xl font-extrabold mb-16">{t("about_why_title")}</h2>
 
           <div className="grid md:grid-cols-4 sm:grid-cols-2 gap-10">
-            {[
-              "تمرکز اختصاصی بر صنایع فولاد و معدن",
-              "فرآیند شفاف استعلام صنعتی",
-              "همکاری رسمی با تأمین‌کنندگان",
-              "تعهد به مشخصات فنی و زمان‌بندی"
-            ].map((item, i) => (
+            {whyUs.map((item, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
@@ -120,19 +127,12 @@ export default function About() {
         </div>
       </section>
 
-      {/* ================= INDUSTRIES ================= */}
       <section className="py-28 bg-gray-800">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-extrabold mb-10">صنایع هدف</h2>
+          <h2 className="text-3xl font-extrabold mb-10">{t("about_industries_title")}</h2>
 
           <div className="flex flex-wrap justify-center gap-6">
-            {[
-              "صنایع فولاد",
-              "معادن فلزی و غیرفلزی",
-              "پروژه‌های EPC",
-              "سیمان و مصالح",
-              "صنایع سنگین"
-            ].map((item, i) => (
+            {industries.map((item, i) => (
               <span
                 key={i}
                 className="px-6 py-3 bg-white/10 rounded-xl text-white"
@@ -144,24 +144,22 @@ export default function About() {
         </div>
       </section>
 
-      {/* ================= CTA ================= */}
       <section className="bg-gray-800 text-white flex flex-col items-center justify-center pt-32 pb-32 text-center">
         <h2 className="text-3xl md:text-4xl font-extrabold mb-12">
-          آماده همکاری صنعتی هستید؟
+          {t("about_cta_title")}
         </h2>
 
         <div className="flex justify-center items-center gap-6 flex-wrap">
           <Link to="/inquiry"
-           
             className="bg-yellow-500 text-black px-10 py-4 rounded-xl font-bold hover:bg-yellow-600 transition"
           >
-            ثبت درخواست استعلام
+            {t("about_cta_inquiry")}
           </Link>
 
           <Link to="/b2b"
             className="border-2 border-white text-white px-10 py-4 rounded-xl font-bold hover:bg-white hover:text-black transition"
           >
-            همکاری B2B
+            {t("about_cta_b2b")}
           </Link>
         </div>
       </section>
