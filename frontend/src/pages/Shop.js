@@ -323,7 +323,7 @@ export default function Shop() {
         if (chunk.length > 0) chunks.push(chunk);
       }
       return chunks;
-    }, []);
+    }, [allProducts]);
 
     const [groupIndex, setGroupIndex] = useState(0);
 
