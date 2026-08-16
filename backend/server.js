@@ -39,6 +39,7 @@ app.use("/api/pages", require("./routes/pageRoutes"));
 app.use("/api/home-sections", require("./routes/homeSectionRoutes"));
 app.use("/api/used-equipments", require("./routes/usedEquipmentRoutes"));
 app.use("/api/my-products", require("./routes/supplierProductRoutes"));
+app.use("/api/chat", require("./routes/chatRoutes"));
 
 // Test route (فقط برای تست، اگه فرانت جدا سرو میشه)
 app.get("/api", (req, res) => {
