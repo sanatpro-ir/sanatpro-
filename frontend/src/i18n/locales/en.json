@@ -171,5 +171,14 @@
   "shop_banner_title": "Special Offers For You",
   "shop_chat_title": "Have a Question?",
   "shop_chat_desc": "Our experts are ready to quickly answer your technical and purchase questions",
-  "shop_chat_button": "Start Chat on WhatsApp"
+  "shop_chat_button": "Start Chat on WhatsApp",
+  "livechat_button": "Live Chat",
+  "livechat_title": "Live Chat",
+  "livechat_subtitle": "Your message is visible to all visitors",
+  "livechat_name_placeholder": "Your name (optional)",
+  "livechat_message_placeholder": "Type your message...",
+  "livechat_send": "Send",
+  "livechat_guest": "Guest",
+  "livechat_empty": "No messages yet. Be the first!",
+  "livechat_connecting": "Connecting..."
 }   

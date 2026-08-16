@@ -171,6 +171,15 @@
   "shop_banner_title": "پیشنهادهای ویژه برای شما",
   "shop_chat_title": "سوالی دارید؟",
   "shop_chat_desc": "کارشناسان ما آماده پاسخگویی سریع به سوالات فنی و خرید شما هستند",
-  "shop_chat_button": "شروع گفتگو در واتساپ"
+  "shop_chat_button": "شروع گفتگو در واتساپ",
+  "livechat_button": "چت آنلاین",
+  "livechat_title": "گفتگوی زنده",
+  "livechat_subtitle": "پیام شما برای همه بازدیدکنندگان قابل مشاهده است",
+  "livechat_name_placeholder": "نام شما (اختیاری)",
+  "livechat_message_placeholder": "پیام خود را بنویسید...",
+  "livechat_send": "ارسال",
+  "livechat_guest": "کاربر مهمان",
+  "livechat_empty": "هنوز پیامی ارسال نشده. اولین نفر باش!",
+  "livechat_connecting": "در حال اتصال..."
   
 }

@@ -171,5 +171,14 @@
   "shop_banner_title": "عروض خاصة لك",
   "shop_chat_title": "هل لديك سؤال؟",
   "shop_chat_desc": "خبراؤنا جاهزون للرد بسرعة على أسئلتك الفنية والشرائية",
-  "shop_chat_button": "ابدأ الدردشة على واتساب"
+  "shop_chat_button": "ابدأ الدردشة على واتساب",
+  "livechat_button": "دردشة مباشرة",
+  "livechat_title": "دردشة مباشرة",
+  "livechat_subtitle": "رسالتك مرئية لجميع الزوار",
+  "livechat_name_placeholder": "اسمك (اختياري)",
+  "livechat_message_placeholder": "اكتب رسالتك...",
+  "livechat_send": "إرسال",
+  "livechat_guest": "زائر",
+  "livechat_empty": "لا توجد رسائل بعد. كن أول من يرسل!",
+  "livechat_connecting": "جارٍ الاتصال..."
 }
