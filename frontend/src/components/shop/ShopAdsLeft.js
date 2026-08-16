@@ -1,31 +1,55 @@
 import { motion } from "framer-motion";
 
-export default function ShopAdsLeft() {
-  const gifs = [
-    "/videos/hero.gif",
-    "/videos/hero2.gif",
-    "/videos/hero3.gif"
-  ];
+const ads = [
+  {
+    image: "/videos/hero.gif",
+    title: "پیشنهاد ویژه صنعتی",
+  },
+  {
+    image: "/videos/hero2.gif",
+    title: "تجهیزات و ماشین‌آلات",
+  },
+];
 
+export default function ShopAdsLeft() {
   return (
-    <aside className="flex flex-col gap-6 sticky top-24">
-      {gifs.map((gif, i) => (
+    <aside className="space-y-4">
+
+      {ads.map((ad, index) => (
         <motion.div
-          key={i}
-          whileHover={{ scale: 1.05 }}
-          className="relative rounded-xl overflow-hidden shadow-2xl"
+          key={index}
+          whileHover={{ scale: 1.02 }}
+          className="
+            relative overflow-hidden
+            rounded-2xl
+            border border-slate-800
+            bg-[#020617]
+            shadow-xl
+            cursor-pointer
+          "
         >
+
           <img
-            src={gif}
-            className="w-full h-[160px] object-cover"
-            alt="ad"
+            src={ad.image}
+            alt={ad.title}
+            className="w-full h-36 object-cover"
           />
 
-          <div className="absolute bottom-0 w-full bg-black/60 text-white text-center py-1">
-            پیشنهاد ویژه صنعتی
+          <div className="
+            absolute bottom-0 left-0 right-0
+            bg-black/75
+            px-3 py-2
+            text-center
+            text-white
+            text-sm
+            font-bold
+          ">
+            {ad.title}
           </div>
+
         </motion.div>
       ))}
+
     </aside>
   );
 }
