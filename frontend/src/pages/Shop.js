@@ -344,48 +344,28 @@
 
 
 
-
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import {
   FaShieldAlt,
   FaCertificate,
   FaHandshake,
   FaAward,
-  FaComments,
-  FaPaperPlane,
 } from "react-icons/fa";
 
 import { API_URL as BASE_URL } from "../config";
+import LiveChat from "../components/LiveChat";
 
 const API_URL = `${BASE_URL}/api/equipments`;
 const CATEGORY_URL = `${BASE_URL}/api/categories`;
+const ADS_URL = `${BASE_URL}/api/home-sections?type=shop_ad`;
 
-const FALLBACK_ADS = [
-  {
-    type: "vip",
-    title: "محصولات ویژه",
-    image: "/videos/hero.gif",
-  },
-  {
-    type: "eco",
-    title: "محصولات اقتصادی",
-    image: "/videos/hero2.gif",
-  },
-  {
-    type: "popular",
-    title: "محبوب‌ترین محصولات",
-    image: "/videos/hero.gif",
-  },
-];
+function shuffleArray(items) {
+  const arr = [...items];
 
-function shuffleArray(array) {
-  const arr = [...array];
-
-  for (let i = arr.length - 1; i > 0; i--) {
+  for (let i = arr.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
@@ -394,23 +374,14 @@ function shuffleArray(array) {
 }
 
 export default function Shop() {
-  const { i18n } = useTranslation();
-
   const [search, setSearch] = useState("");
+  const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
 
-  const [categories, setCategories] = useState([]);
-  const [allProducts, setAllProducts] = useState([]);
-
-  const [shopAds, setShopAds] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [ads, setAds] = useState([]);
 
   const [loading, setLoading] = useState(true);
-  const [chatOpen, setChatOpen] = useState(false);
-  const [message, setMessage] = useState("");
-
-  // =========================
-  // Categories
-  // =========================
 
   useEffect(() => {
     axios
@@ -419,36 +390,22 @@ export default function Shop() {
         setCategories(Array.isArray(res.data) ? res.data : []);
       })
       .catch((err) => {
-        console.error("Category error:", err);
+        console.error("categories:", err);
         setCategories([]);
       });
   }, []);
 
-  // =========================
-  // Ads
-  // =========================
-
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/api/home-sections?type=shop_ad`)
+      .get(ADS_URL)
       .then((res) => {
-        const ads = Array.isArray(res.data) ? res.data : [];
-
-        if (ads.length) {
-          setShopAds(ads);
-        } else {
-          setShopAds(FALLBACK_ADS);
-        }
+        setAds(Array.isArray(res.data) ? res.data.slice(0, 3) : []);
       })
       .catch((err) => {
-        console.error("Shop ads error:", err);
-        setShopAds(FALLBACK_ADS);
+        console.error("ads:", err);
+        setAds([]);
       });
   }, []);
-
-  // =========================
-  // Products
-  // =========================
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -457,92 +414,70 @@ export default function Shop() {
       try {
         const params = {};
 
-        if (activeCategory) {
-          params.category = activeCategory;
-        }
-
         if (search.trim()) {
           params.search = search.trim();
         }
 
+        if (activeCategory) {
+          params.category = activeCategory;
+        }
+
         const res = await axios.get(API_URL, { params });
 
-        const products = res.data?.equipments || [];
+        const list = Array.isArray(res.data?.equipments)
+          ? res.data.equipments
+          : Array.isArray(res.data)
+          ? res.data
+          : [];
 
-        setAllProducts(products);
+        setProducts(list);
       } catch (err) {
-        console.error("Products error:", err);
-        setAllProducts([]);
+        console.error("products:", err);
+        setProducts([]);
       } finally {
         setLoading(false);
       }
     };
 
     fetchProducts();
-  }, [activeCategory, search]);
+  }, [search, activeCategory]);
 
-  // =========================
-  // Product groups
-  // =========================
+  const activeCategoryName = useMemo(() => {
+    if (!activeCategory) return "همه محصولات";
 
-  const vipProducts = useMemo(
-    () => allProducts.filter((p) => p.tag === "vip"),
-    [allProducts]
-  );
+    const found = categories.find(
+      (item) => item._id === activeCategory
+    );
 
-  const ecoProducts = useMemo(
-    () => allProducts.filter((p) => p.tag === "eco"),
-    [allProducts]
-  );
+    return found?.name || "محصولات";
+  }, [activeCategory, categories]);
 
-  const popularProducts = useMemo(
-    () =>
-      allProducts.filter(
-        (p) => p.tag === "hot" || p.tag === "popular"
-      ),
-    [allProducts]
-  );
-
-  // =========================
-  // Main products
-  // =========================
-
-  const displayedProducts = useMemo(() => {
-    return allProducts;
-  }, [allProducts]);
-
-  // =========================
-  // Product Card
-  // =========================
+  const sliderProducts = useMemo(() => {
+    return shuffleArray(products);
+  }, [products]);
 
   function ProductCard({ product }) {
-    const image =
-      product.images && product.images.length
-        ? `${BASE_URL}${product.images[0]}`
-        : null;
+    const image = product?.images?.[0]
+      ? `${BASE_URL}${product.images[0]}`
+      : null;
 
     return (
-      <Link
-        to={`/product/${product._id}`}
-        className="block h-full"
-      >
-        <motion.article
+      <Link to={`/product/${product._id}`} className="block h-full">
+        <motion.div
           whileHover={{ y: -6 }}
           transition={{ duration: 0.2 }}
           className="
             h-full
-            min-h-[330px]
             bg-[#020617]
             border border-gray-800
             rounded-2xl
             overflow-hidden
             shadow-xl
-            hover:border-yellow-400/60
-            flex flex-col
-            cursor-pointer
+            hover:border-yellow-400
+            transition
           "
         >
-          <div className="h-[190px] bg-[#0b1120] flex items-center justify-center overflow-hidden">
+          <div className="h-48 bg-[#0b1220] flex items-center justify-center">
             {image ? (
               <img
                 src={image}
@@ -550,76 +485,46 @@ export default function Shop() {
                 className="w-full h-full object-contain p-4"
               />
             ) : (
-              <div className="text-gray-500 text-sm">
-                تصویر موجود نیست
-              </div>
+              <span className="text-gray-500 text-sm">
+                بدون تصویر
+              </span>
             )}
           </div>
 
-          <div className="p-5 flex flex-col flex-1 text-right">
-            <h3 className="text-white font-bold text-base leading-7 line-clamp-2 min-h-[56px]">
-              {product.title || "محصول بدون نام"}
+          <div className="p-4 text-right">
+            <h3 className="text-white font-bold line-clamp-2 min-h-[56px]">
+              {product.title || "بدون عنوان"}
             </h3>
 
-            <div className="mt-auto pt-5">
-              {product.brand && (
-                <p className="text-gray-400 text-sm mb-2">
-                  برند: {product.brand}
-                </p>
-              )}
+            <p className="text-yellow-400 font-extrabold mt-3">
+              {product.price
+                ? Number(product.price).toLocaleString("fa-IR")
+                : "استعلام قیمت"}{" "}
+              {product.price ? "تومان" : ""}
+            </p>
 
-              {product.price ? (
-                <p className="text-yellow-400 font-extrabold">
-                  {Number(product.price).toLocaleString(
-                    i18n.language === "en" ? "en-US" : "fa-IR"
-                  )}{" "}
-                  تومان
-                </p>
-              ) : (
-                <p className="text-gray-400 text-sm">
-                  جهت استعلام قیمت تماس بگیرید
-                </p>
-              )}
-            </div>
+            <p className="text-gray-500 text-xs mt-3">
+              مشاهده جزئیات ←
+            </p>
           </div>
-        </motion.article>
+        </motion.div>
       </Link>
     );
   }
 
-  // =========================
-  // Categories
-  // =========================
-
   function CategorySidebar() {
     return (
-      <aside
-        dir="rtl"
-        className="
-          bg-[#020617]
-          border border-gray-800
-          rounded-2xl
-          p-5
-          sticky
-          top-24
-          shadow-xl
-        "
-      >
-        <h2 className="text-white text-lg font-extrabold text-right mb-5">
-          دسته‌بندی صنایع
+      <aside className="bg-[#020617] border border-gray-800 rounded-2xl p-5 sticky top-24">
+        <h2 className="text-white text-lg font-extrabold mb-5 text-right">
+          دسته‌بندی
         </h2>
 
         <button
+          type="button"
           onClick={() => setActiveCategory(null)}
           className={`
-            w-full
-            text-right
-            px-4
-            py-3
-            rounded-xl
-            mb-2
-            transition
-            font-bold
+            w-full text-right px-4 py-3 rounded-xl mb-2
+            transition font-bold
             ${
               !activeCategory
                 ? "bg-yellow-400 text-black"
@@ -636,20 +541,13 @@ export default function Shop() {
           return (
             <button
               key={category._id}
+              type="button"
               onClick={() =>
-                setActiveCategory(
-                  active ? null : category._id
-                )
+                setActiveCategory(active ? null : category._id)
               }
               className={`
-                w-full
-                text-right
-                px-4
-                py-3
-                rounded-xl
-                mb-1
-                transition
-                font-semibold
+                w-full text-right px-4 py-3 rounded-xl mb-1
+                transition font-semibold
                 ${
                   active
                     ? "bg-yellow-400 text-black"
@@ -665,66 +563,74 @@ export default function Shop() {
     );
   }
 
-  // =========================
-  // Left Ads
-  // =========================
-
   function AdsSidebar() {
-    const ads =
-      shopAds.length > 0
-        ? shopAds.slice(0, 3)
-        : FALLBACK_ADS;
+    const fallback = [
+      {
+        title: "پیشنهاد ویژه VIP",
+        color:
+          "from-yellow-500/30 via-yellow-400/10 to-transparent",
+      },
+      {
+        title: "محصولات اقتصادی",
+        color:
+          "from-emerald-500/30 via-emerald-400/10 to-transparent",
+      },
+      {
+        title: "محبوب‌ترین محصولات",
+        color:
+          "from-blue-500/30 via-blue-400/10 to-transparent",
+      },
+    ];
 
     return (
-      <aside
-        dir="rtl"
-        className="flex flex-col gap-5"
-      >
-        {ads.map((ad, index) => {
-          const image = ad.image
-            ? ad.image.startsWith("http")
-              ? ad.image
-              : `${BASE_URL}${ad.image}`
-            : FALLBACK_ADS[index]?.image;
+      <aside className="space-y-5">
+        {fallback.map((item, index) => {
+          const backendAd = ads[index];
+
+          const image = backendAd?.image
+            ? backendAd.image.startsWith("http")
+              ? backendAd.image
+              : `${BASE_URL}${backendAd.image}`
+            : null;
 
           const title =
-            ad.title ||
-            FALLBACK_ADS[index]?.title ||
-            "پیشنهاد ویژه";
+            backendAd?.title || item.title;
 
           return (
             <motion.div
-              key={ad._id || index}
-              whileHover={{ y: -5 }}
+              key={index}
+              whileHover={{ y: -4 }}
               className="
                 relative
                 h-[175px]
                 rounded-2xl
                 overflow-hidden
                 border border-gray-800
-                shadow-xl
                 bg-[#020617]
+                shadow-xl
               "
             >
-              <img
-                src={image}
-                alt={title}
-                className="w-full h-full object-cover"
-              />
+              {image ? (
+                <img
+                  src={image}
+                  alt={title}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div
+                  className={`
+                    absolute inset-0
+                    bg-gradient-to-br ${item.color}
+                    flex items-center justify-center
+                  `}
+                >
+                  <div className="text-white text-lg font-extrabold">
+                    {title}
+                  </div>
+                </div>
+              )}
 
-              <div
-                className="
-                  absolute
-                  inset-x-0
-                  bottom-0
-                  bg-black/75
-                  backdrop-blur-sm
-                  text-white
-                  text-center
-                  font-bold
-                  py-3
-                "
-              >
+              <div className="absolute bottom-0 inset-x-0 bg-black/75 text-white text-center py-3 font-bold">
                 {title}
               </div>
             </motion.div>
@@ -734,33 +640,24 @@ export default function Shop() {
     );
   }
 
-  // =========================
-  // Five Product Slider
-  // =========================
-
   function FiveProductSlider() {
-    const groups = useMemo(() => {
-      const shuffled = shuffleArray(allProducts);
-      const result = [];
+    const groups = [];
 
-      for (let i = 0; i < shuffled.length; i += 5) {
-        result.push(shuffled.slice(i, i + 5));
-      }
+    for (let i = 0; i < sliderProducts.length; i += 5) {
+      groups.push(sliderProducts.slice(i, i + 5));
+    }
 
-      return result;
-    }, [allProducts]);
-
-    const [index, setIndex] = useState(0);
+    const [active, setActive] = useState(0);
 
     useEffect(() => {
-      setIndex(0);
-    }, [activeCategory, search]);
+      setActive(0);
+    }, [products]);
 
     useEffect(() => {
       if (groups.length <= 1) return;
 
       const timer = setInterval(() => {
-        setIndex((current) => (current + 1) % groups.length);
+        setActive((current) => (current + 1) % groups.length);
       }, 4500);
 
       return () => clearInterval(timer);
@@ -768,30 +665,25 @@ export default function Shop() {
 
     if (!groups.length) return null;
 
-    const current = groups[index] || [];
-
     return (
-      <section
-        dir="rtl"
-        className="mt-20"
-      >
+      <section className="mt-20">
         <div className="text-center mb-8">
           <h2 className="text-2xl md:text-3xl font-extrabold text-white">
             محصولات پیشنهادی
           </h2>
 
           <p className="text-gray-500 mt-2">
-            محصولات منتخب و تصادفی
+            ۵ محصول از کل محصولات فروشگاه
           </p>
         </div>
 
         <div className="overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.div
-              key={index}
+              key={active}
               initial={{
                 opacity: 0,
-                x: index % 2 === 0 ? 80 : -80,
+                x: active % 2 === 0 ? 80 : -80,
               }}
               animate={{
                 opacity: 1,
@@ -799,18 +691,18 @@ export default function Shop() {
               }}
               exit={{
                 opacity: 0,
-                x: index % 2 === 0 ? -80 : 80,
+                x: active % 2 === 0 ? -80 : 80,
               }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.55 }}
               className="
                 grid
                 grid-cols-2
-                md:grid-cols-3
+                sm:grid-cols-3
                 lg:grid-cols-5
-                gap-5
+                gap-4
               "
             >
-              {current.map((product) => (
+              {groups[active].map((product) => (
                 <ProductCard
                   key={product._id}
                   product={product}
@@ -822,22 +714,20 @@ export default function Shop() {
 
         {groups.length > 1 && (
           <div className="flex justify-center gap-2 mt-6">
-            {groups.map((_, i) => (
+            {groups.map((_, index) => (
               <button
-                key={i}
-                onClick={() => setIndex(i)}
+                key={index}
+                type="button"
+                onClick={() => setActive(index)}
                 className={`
-                  w-2.5
-                  h-2.5
-                  rounded-full
-                  transition
+                  h-2.5 rounded-full transition-all
                   ${
-                    i === index
-                      ? "bg-yellow-400 w-7"
-                      : "bg-gray-700"
+                    index === active
+                      ? "w-8 bg-yellow-400"
+                      : "w-2.5 bg-gray-700"
                   }
                 `}
-                aria-label={`اسلاید ${i + 1}`}
+                aria-label={`اسلاید ${index + 1}`}
               />
             ))}
           </div>
@@ -845,10 +735,6 @@ export default function Shop() {
       </section>
     );
   }
-
-  // =========================
-  // Trust
-  // =========================
 
   function TrustSignals() {
     const items = [
@@ -858,33 +744,23 @@ export default function Shop() {
       },
       {
         icon: <FaCertificate />,
-        title: "تضمین اصالت",
+        title: "اطلاعات معتبر",
       },
       {
         icon: <FaHandshake />,
-        title: "تأمین‌کنندگان معتبر",
+        title: "ارتباط مستقیم",
       },
       {
         icon: <FaAward />,
-        title: "تجربه صنعتی",
+        title: "بازار تخصصی صنعت",
       },
     ];
 
     return (
-      <section
-        dir="rtl"
-        className="
-          mt-20
-          grid
-          grid-cols-2
-          md:grid-cols-4
-          gap-4
-        "
-      >
+      <section className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4">
         {items.map((item) => (
-          <motion.div
+          <div
             key={item.title}
-            whileHover={{ y: -4 }}
             className="
               bg-[#020617]
               border border-gray-800
@@ -897,228 +773,43 @@ export default function Shop() {
               {item.icon}
             </div>
 
-            <p className="text-white font-bold">
+            <div className="text-white font-bold">
               {item.title}
-            </p>
-          </motion.div>
+            </div>
+          </div>
         ))}
       </section>
     );
   }
 
-  // =========================
-  // Live Chat UI
-  // =========================
-
-  function LiveChat() {
-    return (
-      <section
-        dir="rtl"
-        className="mt-20"
-      >
-        <div
-          className="
-            bg-[#020617]
-            border border-gray-800
-            rounded-2xl
-            overflow-hidden
-            shadow-2xl
-          "
-        >
-          <button
-            onClick={() => setChatOpen((value) => !value)}
-            className="
-              w-full
-              flex
-              items-center
-              justify-between
-              px-6
-              py-5
-              text-right
-              hover:bg-gray-900
-              transition
-              cursor-pointer
-            "
-          >
-            <div className="flex items-center gap-4">
-              <div className="
-                w-12
-                h-12
-                rounded-full
-                bg-yellow-400
-                text-black
-                flex
-                items-center
-                justify-center
-                text-xl
-              ">
-                <FaComments />
-              </div>
-
-              <div>
-                <h2 className="text-white font-extrabold text-lg">
-                  گفت‌وگوی آنلاین
-                </h2>
-
-                <p className="text-gray-500 text-sm">
-                  با کاربران و کارشناسان صنعت گفتگو کنید
-                </p>
-              </div>
-            </div>
-
-            <span className="text-yellow-400 text-xl">
-              {chatOpen ? "−" : "+"}
-            </span>
-          </button>
-
-          <AnimatePresence>
-            {chatOpen && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                className="overflow-hidden"
-              >
-                <div className="border-t border-gray-800">
-                  <div className="h-[300px] p-5 overflow-y-auto">
-                    <div className="
-                      max-w-[80%]
-                      bg-gray-900
-                      rounded-2xl
-                      rounded-tr-sm
-                      p-4
-                      text-gray-300
-                      text-sm
-                    ">
-                      👋 به گفت‌وگوی آنلاین صنعت پرو خوش آمدید.
-                      <br />
-                      برای شروع پیام خود را ارسال کنید.
-                    </div>
-                  </div>
-
-                  <div className="
-                    border-t
-                    border-gray-800
-                    p-4
-                    flex
-                    gap-3
-                  ">
-                    <input
-                      value={message}
-                      onChange={(e) =>
-                        setMessage(e.target.value)
-                      }
-                      onKeyDown={(e) => {
-                        if (
-                          e.key === "Enter" &&
-                          message.trim()
-                        ) {
-                          setMessage("");
-                        }
-                      }}
-                      placeholder="پیام خود را بنویسید..."
-                      className="
-                        flex-1
-                        bg-[#0f172a]
-                        border border-gray-700
-                        rounded-xl
-                        px-4
-                        py-3
-                        text-white
-                        outline-none
-                        focus:border-yellow-400
-                      "
-                    />
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (!message.trim()) return;
-                        setMessage("");
-                      }}
-                      className="
-                        w-12
-                        rounded-xl
-                        bg-yellow-400
-                        text-black
-                        flex
-                        items-center
-                        justify-center
-                        hover:bg-yellow-300
-                        transition
-                        cursor-pointer
-                      "
-                    >
-                      <FaPaperPlane />
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </section>
-    );
-  }
-
-  // =========================
-  // Page
-  // =========================
-
   return (
-    <div
-      dir="rtl"
-      className="bg-black min-h-screen text-white"
-    >
-      {/* Header */}
-      <section className="relative h-[42vh] min-h-[350px] overflow-hidden">
+    <div dir="rtl" className="bg-black min-h-screen text-white">
+      {/* HERO */}
+      <section className="relative h-[42vh] min-h-[340px] overflow-hidden">
         <img
           src="/videos/hero.gif"
-          alt="بازار تجهیزات صنعتی"
+          alt="فروشگاه تجهیزات صنعتی"
           className="absolute inset-0 w-full h-full object-cover"
         />
 
-        <div className="
-          absolute
-          inset-0
-          bg-black/65
-          flex
-          items-center
-          justify-center
-          px-5
-        ">
-          <div className="text-center">
-            <h1 className="
-              text-4xl
-              md:text-6xl
-              font-black
-              text-yellow-400
-            ">
+        <div className="absolute inset-0 bg-black/65 flex items-center justify-center">
+          <div className="text-center px-6">
+            <h1 className="text-4xl md:text-6xl font-black text-yellow-400">
               فروشگاه تجهیزات صنعتی
             </h1>
 
-            <p className="
-              text-gray-300
-              mt-5
-              text-base
-              md:text-lg
-            ">
-              تجهیزات معدن، فولاد و صنایع تخصصی
+            <p className="text-gray-300 mt-4 text-lg">
+              صنعت، معدن، فولاد و تجهیزات تخصصی
             </p>
           </div>
         </div>
       </section>
 
-      {/* Search */}
+      {/* SEARCH */}
       <div className="max-w-7xl mx-auto px-5 -mt-7 relative z-10">
-        <div className="
-          bg-[#020617]
-          border border-gray-800
-          rounded-2xl
-          p-3
-          shadow-2xl
-        ">
+        <div className="bg-[#020617] border border-gray-800 rounded-2xl p-3 shadow-2xl">
           <input
+            type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="جستجو در محصولات..."
@@ -1126,85 +817,55 @@ export default function Shop() {
               w-full
               bg-transparent
               text-white
+              px-5 py-4
               text-right
-              px-5
-              py-4
               outline-none
-              placeholder:text-gray-600
             "
           />
         </div>
       </div>
 
-      {/* Main */}
+      {/* MAIN */}
       <main className="max-w-7xl mx-auto px-5 py-16">
         {loading ? (
-          <div className="
-            min-h-[400px]
-            flex
-            items-center
-            justify-center
-            text-gray-400
-          ">
+          <div className="text-center text-gray-400 py-20">
             در حال بارگذاری محصولات...
           </div>
         ) : (
           <>
-            {/* Main 3-column layout */}
-            <section
-              className="
-                grid
-                grid-cols-1
-                lg:grid-cols-12
-                gap-7
-                items-start
-              "
-            >
-              {/* RIGHT - categories */}
-              <div className="lg:col-span-2 order-1">
+            <section className="grid grid-cols-12 gap-7 items-start">
+              {/* RIGHT: CATEGORY */}
+              <div className="col-span-12 lg:col-span-2">
                 <CategorySidebar />
               </div>
 
-              {/* CENTER - products */}
-              <div className="lg:col-span-7 order-2">
-                <div className="mb-7">
-                  <h2 className="text-2xl font-extrabold text-white text-center">
-                    {activeCategory
-                      ? categories.find(
-                          (c) => c._id === activeCategory
-                        )?.name || "محصولات"
-                      : "همه محصولات"}
+              {/* CENTER: PRODUCTS */}
+              <div className="col-span-12 lg:col-span-7">
+                <div className="text-center mb-7">
+                  <h2 className="text-3xl font-extrabold text-white">
+                    {activeCategoryName}
                   </h2>
 
-                  <p className="text-gray-500 text-center mt-2">
-                    {displayedProducts.length} محصول
+                  <p className="text-gray-500 mt-2">
+                    {products.length} محصول
                   </p>
                 </div>
 
-                {displayedProducts.length === 0 ? (
+                {products.length === 0 ? (
                   <div className="
-                    min-h-[350px]
-                    border border-dashed
-                    border-gray-800
+                    min-h-[360px]
                     rounded-2xl
+                    border border-dashed border-gray-800
                     flex
                     items-center
                     justify-center
                     text-gray-500
-                    text-center
-                    p-8
                   ">
-                    محصولی در این دسته‌بندی موجود نیست.
+                    محصولی در این بخش موجود نیست.
                   </div>
                 ) : (
-                  <div className="
-                    grid
-                    grid-cols-1
-                    sm:grid-cols-2
-                    xl:grid-cols-3
-                    gap-5
-                  ">
-                    {displayedProducts.map((product) => (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+                    {products.map((product) => (
                       <ProductCard
                         key={product._id}
                         product={product}
@@ -1214,20 +875,20 @@ export default function Shop() {
                 )}
               </div>
 
-              {/* LEFT - ads */}
-              <div className="lg:col-span-3 order-3">
+              {/* LEFT: 3 BANNERS */}
+              <div className="col-span-12 lg:col-span-3">
                 <AdsSidebar />
               </div>
             </section>
 
-            {/* Five product slider */}
+            {/* ONE SINGLE SLIDER */}
             <FiveProductSlider />
 
-            {/* Trust */}
-            <TrustSignals />
-
-            {/* Chat */}
+            {/* LIVE CHAT */}
             <LiveChat />
+
+            {/* TRUST */}
+            <TrustSignals />
           </>
         )}
       </main>
