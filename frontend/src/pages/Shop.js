@@ -173,46 +173,27 @@ export default function Shop() {
       </Link>
     );
   }
+function ProductSection({ title, products }) {
+  if (!products || products.length === 0) return null;
 
-  function ProductRow({ title, emoji, products }) {
-    const isEmpty = !products || products.length === 0;
-
-    return (
-      <section>
-        <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-2">
-          {emoji} {title}
+  return (
+    <section className="mb-12">
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-2xl font-extrabold text-white">
+          {title}
         </h2>
 
-        <div className="grid grid-cols-12 gap-8 max-w-7xl mx-auto">
-          <div className="col-span-2 hidden md:block">
-            <CategoryBox />
-          </div>
+        <div className="h-px flex-1 bg-gray-800 mr-5" />
+      </div>
 
-          <div className="col-span-12 md:col-span-8 relative">
-            {isEmpty ? (
-              <div className="flex items-center justify-center h-40 text-gray-500 border border-dashed border-gray-700 rounded-xl">
-                {t("shop_category_empty")}
-              </div>
-            ) : (
-              <div>
-                <div className="rotating-border absolute -inset-2 rounded-xl -z-10" />
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-                  {products.slice(0, 8).map((p) => (
-                    <ProductCard key={p._id} product={p} />
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="col-span-2 hidden md:block">
-            <AdsColumn />
-          </div>
-        </div>
-      </section>
-    );
-  }
-
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+        {products.slice(0, 8).map((p) => (
+          <ProductCard key={p._id} product={p} />
+        ))}
+      </div>
+    </section>
+  );
+}
   function FeaturedRow() {
     const perFrame = 5;
     const frames = [];
