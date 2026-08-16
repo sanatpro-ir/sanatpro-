@@ -390,7 +390,7 @@ import { Link } from "react-router-dom";
 
 const CategoryTwo = () => {
   const items = [
-    { id: 1, title: "دریل حفاری کارکرده", image: "https://picsum.photos/600?1" },
+    { id: 1, title: "", image: "https://picsum.photos/600?1" },
     { id: 2, title: "چکش هیدرولیکی دست دوم", image: "https://picsum.photos/600?2" },
     { id: 3, title: "کمپرسور معدنی", image: "https://picsum.photos/600?3" },
   ];

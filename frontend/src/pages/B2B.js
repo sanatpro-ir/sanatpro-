@@ -6,8 +6,33 @@ import {
   FaHeadset,
   FaCheckCircle,
 } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 export default function B2B() {
+  const { t } = useTranslation();
+
+  const whyItems = [
+    { icon: <FaIndustry />, title: t("b2b_why_1_title"), desc: t("b2b_why_1_desc") },
+    { icon: <FaTools />, title: t("b2b_why_2_title"), desc: t("b2b_why_2_desc") },
+    { icon: <FaFileContract />, title: t("b2b_why_3_title"), desc: t("b2b_why_3_desc") },
+    { icon: <FaHeadset />, title: t("b2b_why_4_title"), desc: t("b2b_why_4_desc") },
+  ];
+
+  const processSteps = [
+    t("b2b_process_1"),
+    t("b2b_process_2"),
+    t("b2b_process_3"),
+    t("b2b_process_4"),
+    t("b2b_process_5"),
+  ];
+
+  const formFeatures = [
+    t("b2b_form_feature_1"),
+    t("b2b_form_feature_2"),
+    t("b2b_form_feature_3"),
+    t("b2b_form_feature_4"),
+  ];
+
   return (
     <div className="bg-[#0b0e13] text-white min-h-screen">
 
@@ -22,13 +47,12 @@ export default function B2B() {
           className="relative max-w-7xl mx-auto px-6 text-center"
         >
           <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
-            قراردادهای صنعتی
-            <span className="text-[#FFC000]"> B2B </span>
+            {t("b2b_hero_title_1")}
+            <span className="text-[#FFC000]"> {t("b2b_hero_title_2")} </span>
           </h1>
 
           <p className="text-gray-400 max-w-3xl mx-auto text-lg">
-            تأمین تجهیزات، اجرای پروژه و همکاری رسمی در حوزه معدن، فولاد و صنعت
-            با قرارداد شفاف و پشتیبانی تخصصی
+            {t("b2b_hero_desc")}
           </p>
         </motion.div>
       </section>
@@ -37,28 +61,7 @@ export default function B2B() {
       <section className="py-24 border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8 text-center">
 
-          {[
-            {
-              icon: <FaIndustry />,
-              title: "تجربه صنعتی واقعی",
-              desc: "همکاری با معادن، فولاد و صنایع بزرگ",
-            },
-            {
-              icon: <FaTools />,
-              title: "تأمین تخصصی تجهیزات",
-              desc: "انتخاب دقیق مطابق نیاز پروژه",
-            },
-            {
-              icon: <FaFileContract />,
-              title: "قرارداد رسمی و شفاف",
-              desc: "قابل پیگیری و حقوقی",
-            },
-            {
-              icon: <FaHeadset />,
-              title: "پشتیبانی فنی پروژه",
-              desc: "همراهی تا تحویل نهایی",
-            },
-          ].map((item, i) => (
+          {whyItems.map((item, i) => (
             <motion.div
               key={i}
               whileHover={{ y: -10 }}
@@ -80,17 +83,11 @@ export default function B2B() {
       <section className="py-24 bg-[#0f131c]">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-3xl font-extrabold mb-14 text-center">
-            فرآیند همکاری B2B
+            {t("b2b_process_title")}
           </h2>
 
           <div className="grid md:grid-cols-5 gap-6 text-center">
-            {[
-              "ثبت درخواست",
-              "بررسی فنی",
-              "ارائه پیشنهاد",
-              "انعقاد قرارداد",
-              "تحویل پروژه",
-            ].map((step, i) => (
+            {processSteps.map((step, i) => (
               <motion.div
                 key={i}
                 whileHover={{ scale: 1.06 }}
@@ -118,21 +115,15 @@ export default function B2B() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl font-extrabold mb-6">
-              ثبت درخواست همکاری پروژه‌ای
+              {t("b2b_form_title")}
             </h2>
 
             <p className="text-gray-400 mb-6 leading-relaxed">
-              اطلاعات پروژه خود را ثبت کنید. تیم MinePro درخواست شما را بررسی کرده
-              و پیشنهاد فنی و مالی رسمی ارائه می‌دهد.
+              {t("b2b_form_desc")}
             </p>
 
             <ul className="space-y-3 text-sm">
-              {[
-                "بررسی تخصصی نیاز پروژه",
-                "ارائه پیش‌فاکتور رسمی",
-                "قرارداد شفاف و حقوقی",
-                "تحویل طبق زمان‌بندی",
-              ].map((item, i) => (
+              {formFeatures.map((item, i) => (
                 <li key={i} className="flex items-center gap-3 text-gray-300">
                   <FaCheckCircle className="text-[#FFC000]" />
                   {item}
@@ -152,33 +143,33 @@ export default function B2B() {
             <form className="space-y-5">
               <input
                 type="text"
-                placeholder="نام شرکت / پروژه"
+                placeholder={t("b2b_form_company")}
                 className="w-full bg-[#0b0e13] border border-gray-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#FFC000] outline-none"
               />
 
               <input
                 type="text"
-                placeholder="نام و نام خانوادگی"
+                placeholder={t("b2b_form_fullname")}
                 className="w-full bg-[#0b0e13] border border-gray-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#FFC000] outline-none"
               />
 
               <input
                 type="tel"
-                placeholder="شماره تماس"
+                placeholder={t("b2b_form_phone")}
                 className="w-full bg-[#0b0e13] border border-gray-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#FFC000] outline-none"
               />
 
               <textarea
                 rows="4"
-                placeholder="توضیحات پروژه"
+                placeholder={t("b2b_form_description")}
                 className="w-full bg-[#0b0e13] border border-gray-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#FFC000] outline-none"
               />
 
               <button
                 type="submit"
-                className="w-full bg-[#FFC000] hover:bg-yellow-400 text-black py-4 rounded-xl font-extrabold  items-center justify-center transition"
+                className="w-full bg-[#FFC000] hover:bg-yellow-400 text-black py-4 rounded-xl font-extrabold items-center justify-center transition"
               >
-                ثبت درخواست رسمی B2B
+                {t("b2b_form_submit")}
               </button>
             </form>
           </motion.div>
