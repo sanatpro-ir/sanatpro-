@@ -112,7 +112,30 @@ io.on("connection", (socket) => {
 });
 
 // Render PORT
+// Render PORT
 const PORT = process.env.PORT || 5000;
+
+// ================= ERROR HANDLER =================
+app.use((err, req, res, next) => {
+  console.error("🔥 SERVER ERROR:", err);
+
+  if (err.name === "MulterError") {
+    return res.status(400).json({
+      success: false,
+      message: err.message,
+      code: err.code,
+    });
+  }
+
+  return res.status(err.status || 500).json({
+    success: false,
+    message: err.message || "خطای داخلی سرور",
+    stack:
+      process.env.NODE_ENV === "production"
+        ? undefined
+        : err.stack,
+  });
+});
 
 server.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
