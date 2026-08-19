@@ -43,6 +43,7 @@ import AdminHomeContent from "./admin/AdminHomeContent";
 import AdminUsedEquipment from "./admin/AdminUsedEquipment";
 import AdminPendingProducts from "./admin/AdminPendingProducts";
 
+
 function AppLayout() {
   useLangDirection();
 
@@ -62,6 +63,7 @@ function AppLayout() {
       <div className={needsTopPadding ? "pt-16" : ""}>
         <Routes>
           {/* سایت */}
+          
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/b2b" element={<B2B />} />
@@ -75,6 +77,7 @@ function AppLayout() {
           <Route path="/about" element={<About />} />
           <Route path="/inquiry" element={<Inquiry />} />
           <Route path="/compare" element={<Compare />} />
+          
 
           {/* بازیابی رمز عبور */}
           <Route path="/forgot-password" element={<ForgotPassword />} />

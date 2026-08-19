@@ -7,6 +7,7 @@
   "nav_about": "درباره ما",
   "nav_login": "ورود",
   "nav_register": "ثبت‌نام",
+
   "brand_pro": "PRO",
   "brand_sanat": "SANAT",
 
@@ -24,12 +25,16 @@
   "home_categories_title_1": "دسته‌بندی",
   "home_categories_title_2": "تجهیزات",
   "home_categories_desc": "راهکارهای تخصصی برای صنایع معدن و فولاد",
+
   "home_cat_process_title": "تجهیزات فرآوری",
   "home_cat_process_desc": "سرند، نوار نقاله، فیدر، کراشر",
+
   "home_cat_spare_title": "قطعات یدکی صنعتی",
   "home_cat_spare_desc": "قطعات مصرفی خطوط تولید",
+
   "home_cat_heavy_title": "ماشین‌آلات سنگین",
   "home_cat_heavy_desc": "مخصوص معادن و فولاد",
+
   "home_cat_b2b_title": "تأمین پروژه‌ای B2B",
   "home_cat_b2b_desc": "قرارداد رسمی و پروژه‌محور",
 
@@ -43,10 +48,13 @@
   "home_cta_button": "شروع همکاری B2B",
 
   "home_services_title": "خدمات SANAT-Pro",
+
   "home_service_1_title": "فروش تجهیزات معدنی",
   "home_service_1_desc": "تأمین تخصصی تجهیزات حفاری، استخراج و ایمنی معدن",
+
   "home_service_2_title": "قراردادهای پروژه‌ای B2B",
   "home_service_2_desc": "همکاری رسمی با شرکت‌ها و پروژه‌های صنعتی",
+
   "home_service_3_title": "مشاوره فنی",
   "home_service_3_desc": "راهنمایی تخصصی برای انتخاب تجهیزات مناسب پروژه",
 
@@ -62,6 +70,7 @@
   "home_process_3": "پیشنهاد قیمت",
   "home_process_4": "قرارداد رسمی",
   "home_process_5": "تحویل پروژه",
+
   "footer_desc": "تأمین تخصصی تجهیزات معدنی، فولادی و صنعتی با تمرکز بر قراردادهای B2B و پروژه‌های EPC",
   "footer_quick_links": "دسترسی سریع",
   "footer_link_home": "صفحه اصلی",
@@ -72,6 +81,7 @@
   "footer_address": "ایران، تهران",
   "footer_address_line2": "دفتر مرکزی MinePro",
   "footer_copyright": "MinePro — راهکارهای صنعتی و تأمین B2B",
+
   "about_hero_title": "تأمین تخصصی تجهیزات صنایع فولاد و معدن",
   "about_hero_desc": "SANAT-Pro پلتفرم تخصصی استعلام، تأمین و همکاری پروژه‌ای B2B است که با تمرکز بر صنایع فولاد، معدن و صنایع سنگین فعالیت می‌کند.",
 
@@ -100,6 +110,7 @@
   "about_cta_title": "آماده همکاری صنعتی هستید؟",
   "about_cta_inquiry": "ثبت درخواست استعلام",
   "about_cta_b2b": "همکاری B2B",
+
   "sellused_title": "ثبت تجهیزات دست دوم",
   "sellused_name": "نام تجهیز",
   "sellused_brand": "برند / مدل",
@@ -131,16 +142,20 @@
   "catwo_cta_desc": "MinePro امکان معرفی، فروش امن و عقد قرارداد رسمی تجهیزات کارکرده معدنی را فراهم می‌کند",
   "catwo_cta_button": "ثبت تجهیزات دست دوم",
   "catwo_price_contact": "تماس بگیرید",
+
   "b2b_hero_title_1": "قراردادهای صنعتی",
   "b2b_hero_title_2": "B2B",
   "b2b_hero_desc": "تأمین تجهیزات، اجرای پروژه و همکاری رسمی در حوزه معدن، فولاد و صنعت با قرارداد شفاف و پشتیبانی تخصصی",
 
   "b2b_why_1_title": "تجربه صنعتی واقعی",
   "b2b_why_1_desc": "همکاری با معادن، فولاد و صنایع بزرگ",
+
   "b2b_why_2_title": "تأمین تخصصی تجهیزات",
   "b2b_why_2_desc": "انتخاب دقیق مطابق نیاز پروژه",
+
   "b2b_why_3_title": "قرارداد رسمی و شفاف",
   "b2b_why_3_desc": "قابل پیگیری و حقوقی",
+
   "b2b_why_4_title": "پشتیبانی فنی پروژه",
   "b2b_why_4_desc": "همراهی تا تحویل نهایی",
 
@@ -157,31 +172,32 @@
   "b2b_form_feature_2": "ارائه پیش‌فاکتور رسمی",
   "b2b_form_feature_3": "قرارداد شفاف و حقوقی",
   "b2b_form_feature_4": "تحویل طبق زمان‌بندی",
-    "shop_header_title": "فروشگاه تجهیزات صنعتی",
-  "shop_search_placeholder": "جستجو در محصولات...",
-  "shop_no_image": "تصویر موجود نیست",
-  "shop_loading": "در حال بارگذاری محصولات...",
-  "shop_category_empty": "محصولی در این دسته‌بندی موجود نیست.",
-  "shop_trust_1": "خرید مطمئن",
-  "shop_trust_2": "اطلاعات معتبر",
-  "shop_trust_3": "ارتباط مستقیم",
-  "shop_trust_4": "بازار تخصصی صنعت",
-
   "b2b_form_company": "نام شرکت / پروژه",
   "b2b_form_fullname": "نام و نام خانوادگی",
   "b2b_form_phone": "شماره تماس",
   "b2b_form_description": "توضیحات پروژه",
   "b2b_form_submit": "ثبت درخواست رسمی B2B",
-  
 
-    "shop_category_title": "دسته‌بندی",
+  "shop_header_title": "فروشگاه تجهیزات صنعتی",
+  "shop_search_placeholder": "جستجو در محصولات...",
+  "shop_no_image": "تصویر موجود نیست",
+  "shop_loading": "در حال بارگذاری محصولات...",
+  "shop_category_empty": "محصولی در این دسته‌بندی موجود نیست.",
+
+  "shop_trust_1": "خرید مطمئن",
+  "shop_trust_2": "اطلاعات معتبر",
+  "shop_trust_3": "ارتباط مستقیم",
+  "shop_trust_4": "بازار تخصصی صنعت",
+
+  "shop_category_title": "دسته‌بندی",
   "shop_category_all": "همه محصولات",
   "shop_currency": "تومان",
- 
+
   "shop_banner_title": "پیشنهادهای ویژه برای شما",
   "shop_chat_title": "سوالی دارید؟",
   "shop_chat_desc": "کارشناسان ما آماده پاسخگویی سریع به سوالات فنی و خرید شما هستند",
   "shop_chat_button": "شروع گفتگو در واتساپ",
+
   "livechat_button": "چت آنلاین",
   "livechat_title": "گفتگوی زنده",
   "livechat_subtitle": "پیام شما برای همه بازدیدکنندگان قابل مشاهده است",
@@ -191,19 +207,23 @@
   "livechat_guest": "کاربر مهمان",
   "livechat_empty": "هنوز پیامی ارسال نشده. اولین نفر باش!",
   "livechat_connecting": "در حال اتصال...",
-    "shop_hero_subtitle": "صنعت، معدن، فولاد و تجهیزات تخصصی",
+
+  "shop_hero_subtitle": "صنعت، معدن، فولاد و تجهیزات تخصصی",
   "shop_products_suffix": "محصول",
   "shop_untitled_product": "محصول بدون عنوان",
   "shop_brand_label": "برند",
   "shop_price_inquiry": "استعلام قیمت",
   "shop_view_details": "مشاهده جزئیات ←",
+
   "shop_ad_vip": "پیشنهاد ویژه VIP",
   "shop_ad_eco": "محصولات اقتصادی",
   "shop_ad_popular": "محبوب‌ترین محصولات",
+
   "shop_slider_eyebrow": "پیشنهادهای فروشگاه",
   "shop_slider_title": "محصولات منتخب",
   "shop_slider_desc": "پنج محصول از کل محصولات فروشگاه",
   "shop_slider_aria": "نمایش اسلاید",
+
   "shop_chat_name_required": "لطفاً نام خود را وارد کنید.",
   "shop_chat_send_failed": "ارسال پیام انجام نشد.",
   "shop_chat_heading": "گفت‌وگوی زنده فروشگاه",
@@ -212,17 +232,40 @@
   "shop_chat_name_placeholder": "نام شما",
   "shop_chat_message_placeholder": "پیام خود را بنویسید...",
   "shop_chat_send": "ارسال",
-  "usedDetails": {
-  "loading": "در حال بارگذاری...",
-  "notFound": "محصول مورد نظر پیدا نشد",
-  "backToHome": "بازگشت به صفحه اصلی",
-  "brand": "برند",
-  "condition": "وضعیت",
-  "priceOnRequest": "تماس بگیرید",
-  "callDirect": "تماس مستقیم",
-  "whatsapp": "واتساپ",
-    "usedproduct_not_found": "محصول مورد نظر پیدا نشد",
-  "usedproduct_back_home": "بازگشت به صفحه اصلی",
+
+  "used_market_title": "بازار تجهیزات",
+  "used_market_highlight": "دست دوم",
+  "used_market_subtitle": "تجهیزات دست دوم و استوک پروژه‌ها",
+  "used_loading": "در حال دریافت تجهیزات...",
+  "used_error": "دریافت تجهیزات دست دوم با خطا مواجه شد.",
+  "used_empty": "موردی برای نمایش پیدا نشد.",
+  "used_search_placeholder": "جستجو در تجهیزات دست دوم...",
+  "all": "همه",
+  "category": "دسته‌بندی",
+  "view_details": "مشاهده جزئیات",
+  "no_image": "تصویر موجود نیست",
+  "retry": "تلاش مجدد",
+  "direct_contact": "ارتباط مستقیم",
+  "contact_whatsapp": "ارتباط از طریق واتساپ",
+
+  "used_back": "بازگشت به بازار تجهیزات دست دوم",
+  "used_brand": "برند",
+  "used_year": "سال ساخت",
+  "used_location": "محل دستگاه",
+  "used_seller": "فروشنده",
+  "used_description": "توضیحات",
+  "used_price": "قیمت",
+  "used_contact_price": "تماس بگیرید",
+  "used_contact_seller": "ارتباط مستقیم با فروشنده",
+  "used_contact_description": "برای دریافت اطلاعات بیشتر و قیمت با فروشنده تماس بگیرید.",
+  "used_whatsapp": "واتساپ",
+  "used_open_whatsapp": "ارتباط در واتساپ",
+  "used_no_image": "بدون تصویر",
+  "used_condition": "وضعیت",
+  "used_video_label": "ویدیوی محصول",
+
+  "usedproduct_not_found": "محصول مورد نظر پیدا نشد",
+  "usedproduct_back_home": "بازگشت به بازار تجهیزات دست دوم",
   "usedproduct_brand": "برند",
   "usedproduct_condition": "وضعیت",
   "usedproduct_year": "سال ساخت",
@@ -231,7 +274,13 @@
   "usedproduct_call": "تماس مستقیم",
   "usedproduct_whatsapp": "واتساپ",
   "usedproduct_loading": "در حال بارگذاری...",
-  "usedproduct_video_label": "ویدیوی محصول"
-}
-  
-}
+  "usedproduct_video_label": "ویدیوی محصول",
+
+  "usedDetails_loading": "در حال بارگذاری...",
+  "usedDetails_notFound": "محصول مورد نظر پیدا نشد",
+  "usedDetails_backToHome": "بازگشت به صفحه اصلی",
+  "usedDetails_brand": "برند",
+  "usedDetails_condition": "وضعیت",
+  "usedDetails_priceOnRequest": "تماس بگیرید",
+  "usedDetails_callDirect": "تماس مستقیم",
+  "usedDetails_whatsapp": "واتساپ"}
