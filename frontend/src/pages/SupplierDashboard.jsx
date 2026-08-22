@@ -20,28 +20,54 @@ const SupplierDashboard = () => {
         return;
       }
 
+      let equipData = [];
+      let ordersData = [];
+      let hadError = false;
+
       try {
-        const [equipRes, ordersRes] = await Promise.all([
-          axios.get(`${API_URL}/api/equipments`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          axios.get(`${API_URL}/api/orders/mine`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-        ]);
-        setEquipments(equipRes.data);
-        setOrders(ordersRes.data);
+        const equipRes = await axios.get(`${API_URL}/api/equipments`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        equipData = Array.isArray(equipRes.data)
+          ? equipRes.data
+          : Array.isArray(equipRes.data?.data)
+          ? equipRes.data.data
+          : [];
       } catch (err) {
-        console.error(err);
+        console.error("Equipments fetch error:", err);
+        hadError = true;
         if (err.response?.status === 401) {
           localStorage.removeItem("supplierToken");
           navigate("/supplier-login");
-        } else {
-          setError("خطا در دریافت اطلاعات از سرور. لطفاً دوباره تلاش کنید.");
+          return;
         }
-      } finally {
-        setLoading(false);
       }
+
+      try {
+        const ordersRes = await axios.get(`${API_URL}/api/orders/mine`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        ordersData = Array.isArray(ordersRes.data)
+          ? ordersRes.data
+          : Array.isArray(ordersRes.data?.data)
+          ? ordersRes.data.data
+          : [];
+      } catch (err) {
+        console.error("Orders fetch error:", err);
+        hadError = true;
+        if (err.response?.status === 401) {
+          localStorage.removeItem("supplierToken");
+          navigate("/supplier-login");
+          return;
+        }
+      }
+
+      setEquipments(equipData);
+      setOrders(ordersData);
+      if (hadError) {
+        setError("برخی اطلاعات با مشکل مواجه شد. لطفاً صفحه را رفرش کنید یا بعداً دوباره تلاش کنید.");
+      }
+      setLoading(false);
     };
 
     fetchData();
@@ -67,7 +93,6 @@ const SupplierDashboard = () => {
     .filter((o) => o.status === "completed")
     .reduce((sum, o) => sum + (o.totalPrice || 0), 0);
 
-  const statusLabel = { pending: "در انتظار", completed: "تکمیل‌شده", cancelled: "لغو‌شده" };
   const statusColor = {
     pending: "text-yellow-500",
     completed: "text-green-500",
@@ -144,7 +169,7 @@ const SupplierDashboard = () => {
                     <select
                       value={o.status}
                       onChange={(e) => updateOrderStatus(o._id, e.target.value)}
-                      className={`bg-transparent border rounded px-2 py-1 ${statusColor[o.status]}`}
+                      className={`bg-transparent border rounded px-2 py-1 ${statusColor[o.status] || ""}`}
                     >
                       <option value="pending">در انتظار</option>
                       <option value="completed">تکمیل‌شده</option>
