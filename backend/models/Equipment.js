@@ -10,8 +10,8 @@ const equipmentSchema = new mongoose.Schema(
     tag: { type: String, enum: ["vip", "hot", "eco", "normal"], default: "normal" },
     stock: { type: Number, default: 0 },
     isActive: { type: Boolean, default: true },
-    isApproved: { type: Boolean, default: true },
-    supplier: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    isApproved: { type: Boolean, default: false },
+    supplier: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   },
   { timestamps: true }
 );
