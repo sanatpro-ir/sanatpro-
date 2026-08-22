@@ -117,7 +117,7 @@ const AddProduct = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-6" dir="rtl">
       <div className="max-w-2xl mx-auto bg-white rounded-xl shadow p-8">
-        <h1 className="text-2xl font-bold mb-6">افزودن محصول جدید</h1>
+        <h1 className="text-2xl font-bold mb-6 text-gray-900">افزودن محصول جدید</h1>
 
         {error && (
           <div className="bg-red-100 text-red-600 p-3 rounded mb-4">{error}</div>
@@ -135,7 +135,7 @@ const AddProduct = () => {
               name="title"
               value={form.title}
               onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2"
+              className="w-full border rounded-lg px-4 py-2 text-gray-900 placeholder-gray-400"
               placeholder="مثال: دستگاه سنگ‌شکن فکی"
             />
             {fieldErrors.title && (
@@ -152,7 +152,7 @@ const AddProduct = () => {
               value={form.description}
               onChange={handleChange}
               rows={4}
-              className="w-full border rounded-lg px-4 py-2"
+              className="w-full border rounded-lg px-4 py-2 text-gray-900 placeholder-gray-400"
               placeholder="مشخصات فنی، وضعیت، سال ساخت و..."
             />
             {fieldErrors.description && (
@@ -169,7 +169,7 @@ const AddProduct = () => {
               type="number"
               value={form.price}
               onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2"
+              className="w-full border rounded-lg px-4 py-2 text-gray-900 placeholder-gray-400"
               placeholder="مثال: 15000000"
             />
             {fieldErrors.price && (
@@ -185,7 +185,7 @@ const AddProduct = () => {
               name="category"
               value={form.category}
               onChange={handleChange}
-              className="w-full border rounded-lg px-4 py-2 bg-white"
+              className="w-full border rounded-lg px-4 py-2 bg-white text-gray-900"
             >
               <option value="">انتخاب کنید</option>
               {categories.map((cat) => (
@@ -196,6 +196,11 @@ const AddProduct = () => {
             </select>
             {fieldErrors.category && (
               <p className="text-red-500 text-xs mt-1">{fieldErrors.category}</p>
+            )}
+            {categories.length === 0 && (
+              <p className="text-yellow-600 text-xs mt-1">
+                در حال حاضر دسته‌بندی‌ای برای انتخاب موجود نیست
+              </p>
             )}
           </div>
 
@@ -208,7 +213,7 @@ const AddProduct = () => {
               accept="image/*"
               multiple
               onChange={handleImageChange}
-              className="w-full border rounded-lg px-4 py-2 bg-white"
+              className="w-full border rounded-lg px-4 py-2 bg-white text-gray-900"
             />
             {images.length > 0 && (
               <p className="text-gray-500 text-xs mt-1">{images.length} تصویر انتخاب شد</p>
