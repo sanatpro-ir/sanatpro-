@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const jwt = require("jsonwebtoken");
 
 const Supplier = require("../models/Supplier");
 const Inquiry = require("../models/Inquiry");
@@ -74,6 +75,31 @@ router.delete("/users/:id", protect, adminOnly, async (req, res) => {
     res.json({ message: "کاربر حذف شد" });
   } catch (error) {
     res.status(500).json({ message: "خطا در حذف کاربر" });
+  }
+});
+
+// ورود ادمین به پنل یک کاربر خاص (impersonation)
+router.post("/users/:id/impersonate", protect, adminOnly, async (req, res) => {
+  try {
+    const targetUser = await User.findById(req.params.id).select("-password");
+    if (!targetUser) {
+      return res.status(404).json({ message: "کاربر پیدا نشد" });
+    }
+
+    const token = jwt.sign(
+      {
+        id: targetUser._id,
+        role: targetUser.role,
+        impersonatedBy: req.user._id,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.json({ token, user: targetUser });
+  } catch (error) {
+    console.error("Impersonate error:", error);
+    res.status(500).json({ message: "خطا در ورود به پنل کاربر" });
   }
 });
 
